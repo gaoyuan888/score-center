@@ -11,7 +11,7 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
-	<context:component-scan base-package="yyz.elastic.controller"/>
+	<context:component-scan base-package="com.gaoyua.score.controller"/>
 
 	<!-- 配置一个注解驱动，如果配置此标签，那么就可以不用配置处理器映射器和处理器适配器 -->
 	<mvc:annotation-driven />

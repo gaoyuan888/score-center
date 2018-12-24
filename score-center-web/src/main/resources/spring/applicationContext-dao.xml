@@ -15,23 +15,8 @@
     </bean>
     <!-- 配置Mapper扫描器 -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="yyz.elastic.dao.source1"/>
+        <property name="basePackage" value="com.gaoyua.score.dao"/>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory1"/>
     </bean>
-
-
-
-    <bean id="sqlSessionFactory2" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <!-- 数据库连接池 -->
-        <property name="dataSource" ref="dataSource2"/>
-        <!-- 加载mybatis的全局配置文件，虽然这个全局配置文件是空的，但是这个全局配置文件是必不可少的 -->
-        <property name="configLocation" value="classpath:mybatis/sqlMapConfig.xml"/>
-    </bean>
-    <!-- 配置Mapper扫描器 -->
-    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="yyz.elastic.dao.source2"/>
-        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory2"/>
-    </bean>
-
 
 </beans>

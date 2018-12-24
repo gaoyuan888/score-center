@@ -29,34 +29,6 @@
     <!-- 切面 -->
     <aop:config>
         <aop:advisor advice-ref="txAdvice1"
-                     pointcut="execution(* yyz.elastic.dao.source1.*.*(..))"/>
+                     pointcut="execution(* com.gaoyua.score.dao.*.*(..))"/>
     </aop:config>
-
-
-    <!--第二个数据源事物-->
-
-    <!-- 事务管理器，用的是Spring JDBC的事务管理器 -->
-    <bean id="transactionManager2"
-          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <!-- 数据源 -->
-        <property name="dataSource" ref="dataSource2"/>
-    </bean>
-    <!-- 通知 -->
-    <tx:advice id="txAdvice2" transaction-manager="transactionManager2">
-        <tx:attributes>
-            <!-- 传播行为 -->
-            <tx:method name="save*" propagation="REQUIRED"/>
-            <tx:method name="insert*" propagation="REQUIRED"/>
-            <tx:method name="delete*" propagation="REQUIRED"/>
-            <tx:method name="update*" propagation="REQUIRED"/>
-            <tx:method name="find*" propagation="SUPPORTS" read-only="true"/>
-            <tx:method name="get*" propagation="SUPPORTS" read-only="true"/>
-        </tx:attributes>
-    </tx:advice>
-    <!-- 切面 -->
-    <aop:config>
-        <aop:advisor advice-ref="txAdvice2"
-                     pointcut="execution(* yyz.elastic.dao.source2.*.*(..))"/>
-    </aop:config>
-
 </beans>
