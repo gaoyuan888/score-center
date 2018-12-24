@@ -24,6 +24,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.gaoyua.score</groupId>
+            <artifactId>score-center-service</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.11</version>

@@ -14,7 +14,6 @@
     <name>score-center-dao</name>
     <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.7</maven.compiler.source>
@@ -22,6 +21,11 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>com.gaoyua.score</groupId>
+            <artifactId>score-center-common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
