@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!-- mapper配置 每一个session工厂对应一个包路径-->
+    <!-- 让spring管理sqlsessionfactory 使用mybatis和spring整合包中的 -->
+    <bean id="sqlSessionFactory1" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!-- 数据库连接池 -->
+        <property name="dataSource" ref="dataSource1"/>
+        <!-- 加载mybatis的全局配置文件，虽然这个全局配置文件是空的，但是这个全局配置文件是必不可少的 -->
+        <property name="configLocation" value="classpath:mybatis/sqlMapConfig.xml"/>
+    </bean>
+    <!-- 配置Mapper扫描器 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="yyz.elastic.dao.source1"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory1"/>
+    </bean>
+
+
+
+    <bean id="sqlSessionFactory2" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!-- 数据库连接池 -->
+        <property name="dataSource" ref="dataSource2"/>
+        <!-- 加载mybatis的全局配置文件，虽然这个全局配置文件是空的，但是这个全局配置文件是必不可少的 -->
+        <property name="configLocation" value="classpath:mybatis/sqlMapConfig.xml"/>
+    </bean>
+    <!-- 配置Mapper扫描器 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="yyz.elastic.dao.source2"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory2"/>
+    </bean>
+
+
+</beans>
