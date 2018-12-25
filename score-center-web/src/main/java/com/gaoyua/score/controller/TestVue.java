@@ -31,12 +31,17 @@ public class TestVue {
         ResultJson json = new ResultJson();
         json.setData(result);
         json.setFlag(true);
+        System.out.println(json);
         // 返回结果
         return json;
     }
 
-//    @RequestMapping(value = "/index")
-//    public String index(HttpServletRequest request, HttpServletResponse response) {
-//        return "index";
-//    }
+    @RequestMapping(value = "/client")
+    @ResponseBody
+    public ResultJson index() {
+        ResultJson json = new ResultJson();
+        json.setFlag(true);
+        json.setData("fdas");
+        return json;
+    }
 }
