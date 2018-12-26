@@ -24,15 +24,15 @@ public class TestVue {
     @ResponseBody
     public ResultJson login(Model model, User user) {
         // 查询商品列表
-        Map<String, String> result = new HashMap<>();
-        // 把查询结果传递给页面
-        result.put("user", "admin");
-        result.put("password", "123456");
         ResultJson json = new ResultJson();
-        json.setData(result);
-        json.setFlag(true);
-        System.out.println(json);
-        // 返回结果
+        if(user.getPassWord().equals("123456")&&user.getUserName().equals("yaoyizhou1")){
+            json.setData(true);
+            json.setFlag(true);
+        }
+        if(user.getPassWord().equals("123456")&&user.getUserName().equals("liguofan2")){
+            json.setData(true);
+            json.setFlag(true);
+        }
         return json;
     }
 

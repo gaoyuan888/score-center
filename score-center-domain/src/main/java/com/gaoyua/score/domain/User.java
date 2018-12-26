@@ -8,15 +8,15 @@ package com.gaoyua.score.domain;
  * @desc
  */
 public class User {
-    private String user;
+    private String userName;
     private String passWord;
 
-    public String getUser() {
-        return user;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getPassWord() {
