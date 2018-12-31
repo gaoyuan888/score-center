@@ -18,7 +18,7 @@
 
     <!-- 配置视图解析器 -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value=""></property>
-        <property name="suffix" value=".html"></property>
+        <property name="prefix" value="/WEB-INF/judge/"></property>
+        <property name="suffix" value=".jsp"></property>
     </bean>
 </beans>

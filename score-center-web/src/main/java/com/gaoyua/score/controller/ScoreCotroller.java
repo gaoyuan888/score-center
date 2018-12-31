@@ -15,6 +15,6 @@ public class ScoreCotroller {
 
     @RequestMapping("/")
     public String index(){
-        return "/index";
+        return "scoring";
     }
 }
