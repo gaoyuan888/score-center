@@ -58,7 +58,7 @@
         el: '#app',
         data: {
             record: {
-                flag: '',
+                athlete: '',
                 score: ''
             }
         },
@@ -69,9 +69,10 @@
             }
         },
         methods: {
-            onSubmit(flag, score) {
-                this.record.flag = flag;
+            onSubmit(athlete, score) {
+                this.record.athlete = athlete;
                 this.record.score = score;
+                var _this = this;
                 //将裁判对运动员的打分传到后台
                 $.ajax({
                     type: "POST",//方法类型
@@ -79,8 +80,9 @@
                     data: this.record,
                     dataType: "json",//预期服务器返回的数据类型
                     success: function (res) {
-                        if (res.flag == "0000") {
-
+                        if (res.flag == true) {
+                            console.info(_this.record);
+                            console.info('success');
                         } else {
                             alert("客戶端信息为空");
                         }

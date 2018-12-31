@@ -1,5 +1,7 @@
 package com.gaoyua.score.domain;
 
+import java.util.Date;
+
 /**
  * 功能描述:
  *
@@ -8,28 +10,86 @@ package com.gaoyua.score.domain;
  * @desc
  */
 public class Record {
+
+    /**
+     * 裁判编号
+     */
+    private String refereeName;
+
     /**
      * 1,代表蓝方；2代表红方
      */
-    private int flag;
+    private Integer athlete;
     /**
      * 分数，1<=score<=4
      */
-    private int score;
+    private Integer score;
 
-    public int getScore() {
-        return score;
-    }
+    /**
+     * 犯规次数
+     */
+    private Integer foulNum;
 
-    public void setScore(int score) {
-        this.score = score;
-    }
+    /**
+     * 时间戳
+     */
+    private Date created;
 
-    public int getFlag() {
+    /**
+     * 标记是否已经使用
+     * 1：未匹配计算
+     * 2：已使用
+     */
+    private Integer flag;
+
+
+    public Integer getFlag() {
         return flag;
     }
 
-    public void setFlag(int flag) {
+    public void setFlag(Integer flag) {
         this.flag = flag;
     }
+
+    public String getRefereeName() {
+        return refereeName;
+    }
+
+    public void setRefereeName(String refereeName) {
+        this.refereeName = refereeName;
+    }
+
+    public Integer getAthlete() {
+        return athlete;
+    }
+
+    public void setAthlete(Integer athlete) {
+        this.athlete = athlete;
+    }
+
+    public Integer getScore() {
+        return score;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public Integer getFoulNum() {
+        return foulNum;
+    }
+
+    public void setFoulNum(Integer foulNum) {
+        this.foulNum = foulNum;
+    }
+
+
 }
