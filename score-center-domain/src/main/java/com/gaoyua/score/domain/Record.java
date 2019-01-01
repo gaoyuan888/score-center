@@ -52,13 +52,6 @@ public class Record {
      */
     private Integer flag;
 
-    public int getBaseScore() {
-        return baseScore;
-    }
-
-    public void setBaseScore(int baseScore) {
-        this.baseScore = baseScore;
-    }
 
     public Record() {
     }
@@ -69,6 +62,15 @@ public class Record {
         this.created = created;
         this.flag = flag;
         setAthlete(athlete);
+    }
+
+
+    public int getBaseScore() {
+        return baseScore;
+    }
+
+    public void setBaseScore(int baseScore) {
+        this.baseScore = baseScore;
     }
 
     public String getAthleteName() {

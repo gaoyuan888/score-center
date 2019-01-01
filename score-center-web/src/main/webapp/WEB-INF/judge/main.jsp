@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/common/default.jsp" %>
 <div id="app">
     <el-container>
-        <el-header>Header</el-header>
+        <el-header><h1 id=mytime>{{timerObj.str}}</h1></el-header>
         <el-main>
             <el-container>
                 <el-main v-for="record in records" v-model="records">
@@ -15,7 +15,11 @@
                 </el-main>
             </el-container>
         </el-main>
-        <el-footer>Footer</el-footer>
+        <el-footer>
+            <button id="stop" name="button" @click="stop">stop</button>
+            <button id="start" name="button" @click="start">start</button>
+            <button id="reset" name="button" @click="reset">reset</button>
+        </el-footer>
     </el-container>
 </div>
 
@@ -23,19 +27,81 @@
     var app1 = new Vue({
         el: '#app',
         data: {
-            records: {}
+            records: {},
+            content:'倒计时开始',
+            clock:'',
+            totalTime: 60,
+            timerObj:{
+                h:0,//定义时，分，秒，毫秒并初始化为0；
+                m:0,
+                ms:0,
+                s:0,
+                time:0,
+                str:'',
+                mytime:''
+            }
         },
         created() {
             this.getData();
-            setInterval(this.timer, 1000);
+            setInterval(this.getDataTimer, 1000);
         },
         methods: {
+            timer(){   //定义计时函数
+                this.timerObj.ms=this.timerObj.ms+50;         //毫秒
+                if(this.timerObj.ms>=1000){
+                    this.timerObj.ms=0;
+                    this.timerObj.s=this.timerObj.s+1;         //秒
+                }
+                if(this.timerObj.s>=60){
+                    this.timerObj.s=0;
+                    this.timerObj.m=this.timerObj.m+1;        //分钟
+                }
+                if(this.timerObj.m>=60){
+                    this.timerObj.m=0;
+                    this.timerObj.h=this.timerObj.h+1;        //小时
+                }
+                this.timerObj.str =this.toDub(this.timerObj.h)+":"+this.toDub(this.timerObj.m)+":"+this.toDub(this.timerObj.s)+""/*+this.toDubms(this.ms)+"毫秒"*/;
+            },
+
+            reset(){  //重置
+                clearInterval(this.timerObj.time);
+                this.timerObj.h=0;
+                this.timerObj.m=0;
+                this.timerObj.ms=0;
+                this.timerObj.s=0;
+                this.timerObj.str="00:00:00";
+            },
+
+            start(){  //开始
+                this.timerObj.time=setInterval(this.timer,50);
+            },
+
+            stop(){  //暂停
+                clearInterval(this.timerObj.time);
+            },
+            toDub(n){  //补0操作
+                if(n<10){
+                    return "0"+n;
+                }
+                else {
+                    return ""+n;
+                }
+            },
+
+            toDubms(n){  //给毫秒补0操作
+                if(n<10){
+                    return "00"+n;
+                }
+                else {
+                    return "0"+n;
+                }
+
+            },
             //定時器，定時刷新数据
-            timer: function () {
+            getDataTimer: function () {
                 this.getData();
             },
             onReduceScore(athlete) {
-                var _this = this;
                 //将裁判对运动员的打分传到后台
                 $.ajax({
                     type: "POST",//方法类型
@@ -56,7 +122,6 @@
                 });
             },
             onAddScore(athlete) {
-                var _this = this;
                 //将裁判对运动员的打分传到后台
                 $.ajax({
                     type: "POST",//方法类型
@@ -77,7 +142,6 @@
                 });
             },
             onFoul(athlete) {
-                // var _this = this;
                 //将裁判对运动员的打分传到后台
                 $.ajax({
                     type: "POST",//方法类型
@@ -86,7 +150,6 @@
                     dataType: "json",//预期服务器返回的数据类型
                     success: function (res) {
                         if (res.flag == true) {
-                            // _this.records = res.data;
                         } else {
                             alert("客戶端信息为空");
                         }
@@ -129,7 +192,19 @@
     })
 </script>
 
-<style>
+<style scoped>
+
+
+    /*#mytime{*/
+        /*background: #bbb;*/
+        /*color: #fff;*/
+        /*display: block;*/
+    /*}*/
+    .wrapper{
+        text-align: center;
+        width: 60%;
+        margin: 250px auto;
+    }
     .row-bg {
         padding: 0px 0;
         background-color: #f9fafc;

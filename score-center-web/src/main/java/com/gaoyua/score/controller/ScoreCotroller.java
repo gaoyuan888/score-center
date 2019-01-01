@@ -84,6 +84,8 @@ public class ScoreCotroller {
     @ResponseBody
     public ResultJson<Boolean> addScore(Integer athlete) {
         ResultJson result = new ResultJson();
+        Record r1 = new Record(athlete, 0, 0, new Date(), 1);
+        scoreService.storeRecordInfo(r1);
         List<Record> res = RecordList.result;
         for (Record re : res) {
             if (athlete.equals(re.getAthlete())) {
@@ -99,6 +101,8 @@ public class ScoreCotroller {
     @ResponseBody
     public ResultJson<Boolean> reduceScore(Integer athlete) {
         ResultJson result = new ResultJson();
+        Record r1 = new Record(athlete, 0, 0, new Date(), 1);
+        scoreService.storeRecordInfo(r1);
         List<Record> res = RecordList.result;
         for (Record re : res) {
             if (athlete.equals(re.getAthlete())) {
