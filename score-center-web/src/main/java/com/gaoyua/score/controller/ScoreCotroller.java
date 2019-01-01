@@ -53,6 +53,10 @@ public class ScoreCotroller {
     public String main() {
         return "main";
     }
+    @RequestMapping("/error")
+    public String error() {
+        return "error";
+    }
 
     @RequestMapping("/referee")
     @ResponseBody

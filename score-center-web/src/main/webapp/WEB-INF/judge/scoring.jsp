@@ -109,6 +109,7 @@
                             sessionStorage.setItem('referee', res.data);
                         } else {
                             alert(res.data);
+                            window.location.href='/error';
                         }
 
                     },
