@@ -30,8 +30,8 @@ public class RecordList {
      */
     public static ArrayList<Record> result = new ArrayList<Record>() {
         {
-            add(new Record(1, 0, 0, new Date(), 1));
-            add(new Record(2, 0, 0, new Date(), 1));
+            add(new Record(1, 0, 0, new Date(), 1,0));
+            add(new Record(2, 0, 0, new Date(), 1,0));
         }
     };
 

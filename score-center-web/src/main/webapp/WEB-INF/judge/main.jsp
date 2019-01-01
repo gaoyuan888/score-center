@@ -16,9 +16,9 @@
             </el-container>
         </el-main>
         <el-footer>
-            <button id="stop" name="button" @click="stop">stop</button>
-            <button id="start" name="button" @click="start">start</button>
-            <button id="reset" name="button" @click="reset">reset</button>
+            <button id="stop" name="button" @click="stop">停止计时</button>
+            <button id="start" name="button" @click="start">开始计时</button>
+            <button id="reset" name="button" @click="reset">重置时间</button>
         </el-footer>
     </el-container>
 </div>
