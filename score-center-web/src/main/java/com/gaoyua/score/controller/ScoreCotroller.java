@@ -72,7 +72,7 @@ public class ScoreCotroller {
     @ResponseBody
     public ResultJson<Boolean> foul(Integer athlete) {
         ResultJson result = new ResultJson();
-        Record r1 = new Record(athlete, 0, 1, new Date(), 1);
+        Record r1 = new Record(athlete, 0, 1, new Date(), 1,0);
         scoreService.storeRecordInfo(r1);
 //        List<Record> res = RecordList.result;
         result.setData(true);
@@ -80,28 +80,22 @@ public class ScoreCotroller {
         return result;
     }
 
-    @RequestMapping("/addScore")
+    @RequestMapping("/addBaseScore")
     @ResponseBody
-    public ResultJson<Boolean> addScore(Integer athlete) {
+    public ResultJson<Boolean> addBaseScore(Integer athlete) {
         ResultJson result = new ResultJson();
-        Record r1 = new Record(athlete, 0, 0, new Date(), 1);
+        Record r1 = new Record(athlete, 0, 0, new Date(), 1,1);
         scoreService.storeRecordInfo(r1);
-        List<Record> res = RecordList.result;
-        for (Record re : res) {
-            if (athlete.equals(re.getAthlete())) {
-                re.setBaseScore(re.getBaseScore() + 1);
-            }
-        }
         result.setData(true);
         result.setFlag(true);
         return result;
     }
 
-    @RequestMapping("/reduceScore")
+    @RequestMapping("/reduceBaseScore")
     @ResponseBody
-    public ResultJson<Boolean> reduceScore(Integer athlete) {
+    public ResultJson<Boolean> reduceBaseScore(Integer athlete) {
         ResultJson result = new ResultJson();
-        Record r1 = new Record(athlete, 0, 0, new Date(), 1);
+        Record r1 = new Record(athlete, 0, 0, new Date(), 1,-1);
         scoreService.storeRecordInfo(r1);
         List<Record> res = RecordList.result;
         for (Record re : res) {

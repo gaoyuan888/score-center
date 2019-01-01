@@ -10,8 +10,8 @@
                     得分：{{record.score}}</br>
                     犯规次数：{{record.foulNum}}</br>
                     <el-button type="primary" circle @click="onFoul(record.athlete)">犯规</el-button>
-                    <el-button type="primary" circle @click="onAddScore(record.athlete)">+1</el-button>
-                    <el-button type="primary" circle @click="onReduceScore(record.athlete)">-1</el-button>
+                    <el-button type="primary" circle @click="onAddBaseScore(record.athlete)">+1</el-button>
+                    <el-button type="primary" circle @click="onReduceBaseScore(record.athlete)">-1</el-button>
                 </el-main>
             </el-container>
         </el-main>
@@ -101,11 +101,11 @@
             getDataTimer: function () {
                 this.getData();
             },
-            onReduceScore(athlete) {
+            onReduceBaseScore(athlete) {
                 //将裁判对运动员的打分传到后台
                 $.ajax({
                     type: "POST",//方法类型
-                    url: "/reduceScore",//url
+                    url: "/reduceBaseScore",//url
                     data: {'athlete': athlete},
                     dataType: "json",//预期服务器返回的数据类型
                     success: function (res) {
@@ -121,11 +121,11 @@
                     }
                 });
             },
-            onAddScore(athlete) {
+            onAddBaseScore(athlete) {
                 //将裁判对运动员的打分传到后台
                 $.ajax({
                     type: "POST",//方法类型
-                    url: "/addScore",//url
+                    url: "/addBaseScore",//url
                     data: {'athlete': athlete},
                     dataType: "json",//预期服务器返回的数据类型
                     success: function (res) {

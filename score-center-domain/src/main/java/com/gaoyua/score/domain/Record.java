@@ -56,10 +56,11 @@ public class Record {
     public Record() {
     }
 
-    public Record(Integer athlete, int score, int foulNum, Date created, Integer flag) {
+    public Record(Integer athlete, int score, int foulNum, Date created, Integer flag, int baseScore) {
         this.score = score;
         this.foulNum = foulNum;
         this.created = created;
+        this.baseScore = baseScore;
         this.flag = flag;
         setAthlete(athlete);
     }

@@ -57,12 +57,25 @@ public class ScoreServiceImpl implements ScoreService {
 
         //3.计算指定运动员的有效得分
         int effectScore = getEffectScoreGroupByAthlateAndReferee(rlist);
-        //4.设置有效分数
-        result.setScore(result.getBaseScore() + effectScore);
-        //5.获取犯规次数
+
+        //4获取裁判的基本分数
+        int baseScore = getBaseScoreGroupByAthLate(rlist);
+        //5.设置有效分数
+        result.setScore(baseScore + effectScore);
+        //6.获取犯规次数
         result.setFoulNum(getFoulNum(rlist));
-        //6.还原标记
+        //7.还原标记
         restoreFlag(list);
+        return result;
+    }
+
+    private int getBaseScoreGroupByAthLate(List<Record> rlist) {
+        int result = 0;
+        if (rlist != null && rlist.size() > 0) {
+            for (Record record : rlist) {
+                result += record.getBaseScore();
+            }
+        }
         return result;
     }
 
