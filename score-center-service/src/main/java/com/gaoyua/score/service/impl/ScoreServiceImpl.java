@@ -111,15 +111,6 @@ public class ScoreServiceImpl implements ScoreService {
 
     }
 
-    private Record getScoreResult(Record effectScore, List<Record> recordList) {
-        if (recordList != null && recordList.size() > 0) {
-            for (Record record : recordList) {
-                effectScore.setFoulNum(effectScore.getFoulNum() + record.getFoulNum());
-            }
-        }
-        return effectScore;
-    }
-
 
     //根据运动员标记将打分记录分组
     private List<Record> getRecordGroupByAthLate(List<Record> list, Integer athlateFlag) {
@@ -148,9 +139,6 @@ public class ScoreServiceImpl implements ScoreService {
 
         return effectOne.getScore() + effectTwo.getScore() + effectThree.getScore();
 
-//        result.setScore(effectOne.getScore() + effectTwo.getScore() + effectThree.getScore());
-//        result.setAthlete(effectOne.getAthlete() == null ? (effectTwo.getAthlete() == null ? effectThree.getAthlete() : effectTwo.getAthlete()) : effectOne.getAthlete());
-//        return result;
     }
 
     //对红方或者蓝方按照裁判打分分组

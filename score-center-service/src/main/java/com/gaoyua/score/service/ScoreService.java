@@ -2,8 +2,6 @@ package com.gaoyua.score.service;
 
 import com.gaoyua.score.domain.Record;
 
-import java.util.List;
-
 /**
  * 功能描述:
  *
