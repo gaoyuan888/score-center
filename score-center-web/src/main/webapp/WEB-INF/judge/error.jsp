@@ -1,4 +1,4 @@
-
+<%@ include file="/WEB-INF/common/default.jsp" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <template>
     <p class="page-container">404 page not found</p>
