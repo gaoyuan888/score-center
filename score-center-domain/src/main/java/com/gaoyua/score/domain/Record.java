@@ -20,15 +20,20 @@ public class Record {
      * 1,代表蓝方；2代表红方
      */
     private Integer athlete;
+
+    /**
+     * 红方或者蓝方
+     */
+    private String athleteName;
     /**
      * 分数，1<=score<=4
      */
-    private Integer score;
+    private int score;
 
     /**
      * 犯规次数
      */
-    private Integer foulNum;
+    private int foulNum;
 
     /**
      * 时间戳
@@ -42,6 +47,13 @@ public class Record {
      */
     private Integer flag;
 
+    public String getAthleteName() {
+        return athleteName;
+    }
+
+    public void setAthleteName(String athleteName) {
+        this.athleteName = athleteName;
+    }
 
     public Integer getFlag() {
         return flag;
@@ -65,13 +77,18 @@ public class Record {
 
     public void setAthlete(Integer athlete) {
         this.athlete = athlete;
+        if (athlete!=null&&athlete == 1) {
+            setAthleteName("蓝方");
+        } else if (athlete!=null&&athlete == 2) {
+            setAthleteName("红方");
+        }
     }
 
-    public Integer getScore() {
+    public int getScore() {
         return score;
     }
 
-    public void setScore(Integer score) {
+    public void setScore(int score) {
         this.score = score;
     }
 
@@ -83,13 +100,11 @@ public class Record {
         this.created = created;
     }
 
-    public Integer getFoulNum() {
+    public int getFoulNum() {
         return foulNum;
     }
 
-    public void setFoulNum(Integer foulNum) {
+    public void setFoulNum(int foulNum) {
         this.foulNum = foulNum;
     }
-
-
 }

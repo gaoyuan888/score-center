@@ -4,6 +4,7 @@ import com.gaoyua.score.domain.Record;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -23,7 +24,7 @@ public class RecordList {
     /**
      * 记录裁判信息，初始化分配3个裁判
      */
-    public static volatile List<String> refereeList = new ArrayList<>(Arrays.asList("refereeOne", "refereeTwo", "refereeThree"));
+    public static volatile Iterator<String> iterator  = new ArrayList<>(Arrays.asList("refereeOne", "refereeTwo", "refereeThree")).iterator();
 
 
 }

@@ -5,6 +5,7 @@ import com.gaoyua.score.common.Enum.RefereeEnum;
 import com.gaoyua.score.common.constant.RecordList;
 import com.gaoyua.score.domain.Record;
 import com.gaoyua.score.service.ScoreService;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +34,9 @@ public class ScoreServiceImpl implements ScoreService {
     public List<Record> getRecord() {
         //所有打分记录
         ArrayList<Record> list = RecordList.recordList;
+        if (list == null || list.size() == 0) {
+            return null;
+        }
         //先按照红、蓝两个运动员分组
         List<Record> red = getRecordGroupByAthLate(list, AthleteEnum.ATHLETERED.getType());
         List<Record> blue = getRecordGroupByAthLate(list, AthleteEnum.ATHLETEBLEUE.getType());
@@ -43,11 +47,24 @@ public class ScoreServiceImpl implements ScoreService {
         Record blueEffectScore = getEffectScoreGroupByAthlateAndReferee(blue);
         //获取犯规次数
         Record redResult = getScoreResult(redEffectScore, red);
+        redResult.setAthlete(2);
         Record blueResult = getScoreResult(blueEffectScore, blue);
+        blueResult.setAthlete(1);
         List<Record> result = new ArrayList<>();
         result.add(redResult);
         result.add(blueResult);
+        //还原标记
+        restoreFlag(list);
         return result;
+    }
+
+    private void restoreFlag(List<Record> list) {
+        if (list != null && list.size() > 0) {
+            for (Record record : list) {
+                record.setFlag(1);
+            }
+        }
+
     }
 
     private Record getScoreResult(Record effectScore, List<Record> recordList) {
@@ -86,7 +103,7 @@ public class ScoreServiceImpl implements ScoreService {
         Record avgThree = getEffectScore(three, two, one);
 
         result.setScore(avgOne.getScore() + avgTwo.getScore() + avgThree.getScore());
-        result.setAthlete(avgOne.getAthlete());
+        result.setAthlete(avgOne.getAthlete() == null ? (avgTwo.getAthlete() == null ? avgThree.getAthlete() : avgTwo.getAthlete()) : avgOne.getAthlete());
         return result;
     }
 
@@ -113,9 +130,9 @@ public class ScoreServiceImpl implements ScoreService {
                 continue;
             }
             //为有效得分打标记
-            setFlag4TargetRecord(r1,two,flag);
-            setFlag4TargetRecord(r1,three,flag);
-            if (flag >= 2) {
+            Integer flag1 = setFlag4TargetRecord(r1, two, flag);
+            Integer flag2 = setFlag4TargetRecord(r1, three, flag1);
+            if (flag2 >= 1) {
                 result.setScore(result.getScore() + r1.getScore());
                 result.setAthlete(r1.getAthlete());
             }
@@ -124,7 +141,10 @@ public class ScoreServiceImpl implements ScoreService {
         return result;
     }
 
-    private void setFlag4TargetRecord(Record according, List<Record> target, Integer flag) {
+    private Integer setFlag4TargetRecord(Record according, List<Record> target, Integer flag) {
+        if (according.getFlag().equals(2)) {
+            return flag;
+        }
         Date date = according.getCreated();
         for (Record r3 : target) {
             if (r3.getFlag().equals(2)) {
@@ -132,12 +152,14 @@ public class ScoreServiceImpl implements ScoreService {
             }
             if (r3.getCreated().before(DateUtils.addSeconds(date, 2))
                     && r3.getCreated().after(DateUtils.addSeconds(date, -2))
-                    && r3.getScore().equals(according.getScore())) {
+                    && r3.getScore() == according.getScore()) {
                 r3.setFlag(2);
                 according.setFlag(2);
-                flag++;
+                flag = flag + 1;
+                break;
             }
         }
+        return flag;
     }
 
 
