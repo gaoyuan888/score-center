@@ -30,6 +30,43 @@ public class ScoreServiceImpl implements ScoreService {
     }
 
     @Override
+    public Record getRecord(Integer athlete) {
+        //1.所有打分记录
+        ArrayList<Record> list = RecordList.recordList;
+        if (list == null || list.size() == 0) {
+
+        }
+        //2.获取指定运动员打分记录
+        List<Record> rlist = getRecordGroupByAthLate(list, athlete);
+        if (rlist == null || rlist.size() == 0) {
+
+        }
+        //3.计算指定运动员的有效得分
+        Record redEffectScore = getEffectScoreGroupByAthlateAndReferee(rlist);
+        //4.获取犯规次数
+        redEffectScore.setFoulNum(getFoulNum(rlist));
+        //还原标记
+        restoreFlag(list);
+        return redEffectScore;
+    }
+
+    /**
+     * 计算犯规次数
+     *
+     * @param rlist
+     * @return
+     */
+    private int getFoulNum(List<Record> rlist) {
+        int result = 0;
+        if (rlist != null && rlist.size() > 0) {
+            for (Record record : rlist) {
+                result += record.getFoulNum();
+            }
+        }
+        return result;
+    }
+
+    @Override
     public List<Record> getRecord() {
         List<Record> result = new ArrayList<>();
         Record redResult = new Record();

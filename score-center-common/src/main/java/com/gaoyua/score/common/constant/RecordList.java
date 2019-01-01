@@ -1,11 +1,9 @@
 package com.gaoyua.score.common.constant;
 
 import com.gaoyua.score.domain.Record;
+import javafx.beans.property.ReadOnlyListProperty;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -29,6 +27,10 @@ public class RecordList {
     /**
      * 两个运动员最终得分结果
      */
-    public static ArrayList<Record> result = new ArrayList<>();
-
+    public static ArrayList<Record> result = new ArrayList<Record>(){
+        {
+        add(new Record(1, 0, 0, new Date(), 1));
+        add(new Record(1, 0, 0, new Date(), 1));
+       }
+    };
 }

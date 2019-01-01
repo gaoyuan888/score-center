@@ -4,15 +4,12 @@ import com.gaoyua.score.common.ResultJson;
 import com.gaoyua.score.common.constant.RecordList;
 import com.gaoyua.score.domain.Record;
 import com.gaoyua.score.service.ScoreService;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -45,6 +42,7 @@ public class ScoreCotroller {
         String referee = RecordList.iterator.next();
         result.setFlag(true);
         result.setData(referee);
+
         return result;
     }
 
@@ -73,7 +71,7 @@ public class ScoreCotroller {
     @ResponseBody
     public ResultJson<List<Record>> foul(Integer athlete) {
         ResultJson result = new ResultJson();
-        Record r1 = new Record(athlete, -1, 1, new Date(), 1);
+        Record r1 = new Record(athlete, 0, 1, new Date(), 1);
         scoreService.storeRecordInfo(r1);
         List<Record> res = RecordList.result;
         result.setData(res);
@@ -85,9 +83,12 @@ public class ScoreCotroller {
     @ResponseBody
     public ResultJson<List<Record>> addScore(Integer athlete) {
         ResultJson result = new ResultJson();
-        Record r1 = new Record(athlete, 1, 0, new Date(), 1);
-        scoreService.storeRecordInfo(r1);
         List<Record> res = RecordList.result;
+        for (Record re : res) {
+            if (athlete.equals(re.getAthlete())) {
+                re.setScore(re.getScore() + 1);
+            }
+        }
         result.setData(res);
         result.setFlag(true);
         return result;
@@ -97,9 +98,12 @@ public class ScoreCotroller {
     @ResponseBody
     public ResultJson<List<Record>> reduceScore(Integer athlete) {
         ResultJson result = new ResultJson();
-        Record r1 = new Record(athlete, -1, 0, new Date(), 1);
-        scoreService.storeRecordInfo(r1);
         List<Record> res = RecordList.result;
+        for (Record re : res) {
+            if (athlete.equals(re.getAthlete())) {
+                re.setScore(re.getScore() - 1);
+            }
+        }
         result.setData(res);
         result.setFlag(true);
         return result;
