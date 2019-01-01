@@ -27,6 +27,7 @@ public class ScoreCotroller {
 
     @RequestMapping("/")
     public String index() {
+        scoreService.getResultScheduled();
         return "scoring";
     }
 

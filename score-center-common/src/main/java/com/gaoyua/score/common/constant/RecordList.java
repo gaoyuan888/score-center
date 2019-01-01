@@ -27,10 +27,15 @@ public class RecordList {
     /**
      * 两个运动员最终得分结果
      */
-    public static ArrayList<Record> result = new ArrayList<Record>(){
+    public static ArrayList<Record> result = new ArrayList<Record>() {
         {
-        add(new Record(1, 0, 0, new Date(), 1));
-        add(new Record(1, 0, 0, new Date(), 1));
-       }
+            add(new Record(1, 0, 0, new Date(), 1));
+            add(new Record(1, 0, 0, new Date(), 1));
+        }
     };
+
+    /**
+     * 定义一个全局标记
+     */
+    public static Integer flag = 1;
 }

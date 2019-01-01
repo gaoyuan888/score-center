@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 功能描述:
@@ -21,6 +24,9 @@ import java.util.List;
  */
 @Service("scoreService")
 public class ScoreServiceImpl implements ScoreService {
+
+    private static ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
+
     @Override
     public void storeRecordInfo(Record record) {
         record.setCreated(new Date());
@@ -34,21 +40,33 @@ public class ScoreServiceImpl implements ScoreService {
         //1.所有打分记录
         ArrayList<Record> list = RecordList.recordList;
         if (list == null || list.size() == 0) {
-
+            ArrayList<Record> rlist = RecordList.result;
+            for (Record record : rlist) {
+                if (record.getAthlete().equals(athlete)) {
+                    return record;
+                }
+            }
         }
         //2.获取指定运动员打分记录
         List<Record> rlist = getRecordGroupByAthLate(list, athlete);
         if (rlist == null || rlist.size() == 0) {
-
+            for (Record record : rlist) {
+                if (record.getAthlete().equals(athlete)) {
+                    return record;
+                }
+            }
         }
         //3.计算指定运动员的有效得分
-        Record redEffectScore = getEffectScoreGroupByAthlateAndReferee(rlist);
-        //4.获取犯规次数
-        redEffectScore.setFoulNum(getFoulNum(rlist));
-        //还原标记
+        Record effectScore = getEffectScoreGroupByAthlateAndReferee(rlist);
+        //4.设置运动员
+        effectScore.setAthlete(athlete);
+        //5.获取犯规次数
+        effectScore.setFoulNum(getFoulNum(rlist));
+        //6.还原标记
         restoreFlag(list);
-        return redEffectScore;
+        return effectScore;
     }
+
 
     /**
      * 计算犯规次数
@@ -104,19 +122,20 @@ public class ScoreServiceImpl implements ScoreService {
 
     @Override
     public void getResultScheduled() {
-        try {
-            while (true) {
-                List<Record> record = getRecord();
-                for (Record rd : record) {
-                    RecordList.result.add(rd);
-
+        executorService.scheduleWithFixedDelay(new Runnable() {
+            public void run() {
+                try {
+                    List<Record> record = new ArrayList<>();
+                    record.add(getRecord(1));
+                    record.add(getRecord(2));
+                    for (Record rd : record) {
+                        RecordList.result.add(rd);
+                    }
+                } catch (Exception var2) {
                 }
-                Thread.sleep(1000);
-            }
-        } catch (Exception e) {
-//            getResultScheduled();
-        }
 
+            }
+        }, 0L, 1L, TimeUnit.SECONDS);
     }
 
     private void restoreFlag(List<Record> list) {
@@ -159,12 +178,12 @@ public class ScoreServiceImpl implements ScoreService {
 
         assemByReferee(one, two, three, ahtlet);
         //遍历1,2,3号裁判的评分
-        Record avgOne = getEffectScore(one, two, three);
-        Record avgTwo = getEffectScore(two, three, one);
-        Record avgThree = getEffectScore(three, two, one);
+        Record effectOne = getEffectScore(one, two, three);
+        Record effectTwo = getEffectScore(two, three, one);
+        Record effectThree = getEffectScore(three, two, one);
 
-        result.setScore(avgOne.getScore() + avgTwo.getScore() + avgThree.getScore());
-        result.setAthlete(avgOne.getAthlete() == null ? (avgTwo.getAthlete() == null ? avgThree.getAthlete() : avgTwo.getAthlete()) : avgOne.getAthlete());
+        result.setScore(effectOne.getScore() + effectTwo.getScore() + effectThree.getScore());
+        result.setAthlete(effectOne.getAthlete() == null ? (effectTwo.getAthlete() == null ? effectThree.getAthlete() : effectTwo.getAthlete()) : effectOne.getAthlete());
         return result;
     }
 

@@ -6,20 +6,12 @@
         <el-main>
             <el-container>
                 <el-main v-for="record in records" v-model="records">
-                    <%--<el-row type="flex" class="row-bg">--%>
                     姓名：{{record.athleteName}}</br>
-                    <%--</el-row>--%>
-                    <%--<el-row type="flex" class="row-bg">--%>
                     得分：{{record.score}}</br>
-                    <%--</el-row>--%>
-                    <%--<el-row type="flex" class="row-bg">--%>
                     犯规次数：{{record.foulNum}}</br>
-                    <%--</el-row>--%>
-                    <%--<el-row type="flex" class="row-bg">--%>
                     <el-button type="primary" circle @click="onFoul(record.athlete)">犯规</el-button>
                     <el-button type="primary" circle @click="onAddScore(record.athlete)">+1</el-button>
                     <el-button type="primary" circle @click="onReduceScore(record.athlete)">-1</el-button>
-                    <%--</el-row>--%>
                 </el-main>
             </el-container>
         </el-main>
