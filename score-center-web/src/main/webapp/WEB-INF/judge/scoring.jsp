@@ -1,27 +1,28 @@
 <%@ include file="/WEB-INF/common/default.jsp" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <div id="app">
+    <el-input v-if="true" v-model="record.referee" value="${referee}"></el-input>
     <el-container>
         蓝
         <el-main width="50%">
             <el-row type="flex" class="row-bg">
                 <el-col :span="6">
-                    <el-button circle @click="onSubmit(1,1)">1分</el-button>
+                    <el-button circle @click="onSubmit(1,1,'${referee}')">1分</el-button>
                 </el-col>
             </el-row>
             <el-row type="flex" class="row-bg" justify="center">
                 <el-col :span="6">
-                    <el-button type="primary" circle @click="onSubmit(1,2)">2分</el-button>
+                    <el-button type="primary" circle @click="onSubmit(1,2,'${referee}')">2分</el-button>
                 </el-col>
             </el-row>
             <el-row type="flex" class="row-bg" justify="end">
                 <el-col :span="6">
-                    <el-button type="success" circle @click="onSubmit(1,3)">3分</el-button>
+                    <el-button type="success" circle @click="onSubmit(1,3,'${referee}')">3分</el-button>
                 </el-col>
             </el-row>
             <el-row type="flex" class="row-bg" justify="end">
                 <el-col :span="6">
-                    <el-button type="info" circle @click="onSubmit(1,4)">4分</el-button>
+                    <el-button type="info" circle @click="onSubmit(1,4,'${referee}')">4分</el-button>
                 </el-col>
             </el-row>
         </el-main>
@@ -29,13 +30,13 @@
         <el-main>
             <el-row type="flex" class="row-bg" justify="end">
                 <el-col :span="6">
-                    <el-button type="info" circle @click="onSubmit(2,1)">1分</el-button>
+                    <el-button type="info" circle @click="onSubmit(2,1,'${referee}')">1分</el-button>
                 </el-col>
             </el-row>
 
             <el-row type="flex" class="row-bg" justify="center">
                 <el-col :span="6">
-                    <el-button type="success" circle @click="onSubmit(2,2)">2分</el-button>
+                    <el-button type="success" circle @click="onSubmit(2,2,'${referee}')">2分</el-button>
                 </el-col>
             </el-row>
             <el-row type="flex" class="row-bg">
@@ -59,19 +60,21 @@
         data: {
             record: {
                 athlete: '',
-                score: ''
+                score: '',
+                referee:''
             }
         },
         created() {
             var user = JSON.parse(sessionStorage.getItem('user'));
             if (!user) {
-                alert('no user')
+                // alert('no user')
             }
         },
         methods: {
-            onSubmit(athlete, score) {
+            onSubmit(athlete, score,referee) {
                 this.record.athlete = athlete;
                 this.record.score = score;
+                this.record.referee=referee;
                 var _this = this;
                 //将裁判对运动员的打分传到后台
                 $.ajax({

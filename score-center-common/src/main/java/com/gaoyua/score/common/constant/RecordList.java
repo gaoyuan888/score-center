@@ -24,4 +24,6 @@ public class RecordList {
      * 记录裁判信息，初始化分配3个裁判
      */
     public static volatile List<String> refereeList = new ArrayList<>(Arrays.asList("refereeOne", "refereeTwo", "refereeThree"));
+
+
 }

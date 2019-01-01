@@ -93,13 +93,13 @@ public class ScoreServiceImpl implements ScoreService {
     //对红方或者蓝方按照裁判打分分组
     private void assemByReferee(List<Record> one, List<Record> two, List<Record> three, List<Record> ahtlet) {
         for (Record record : ahtlet) {
-            if (record.getRefereeName().equals(RefereeEnum.REREREE_ONE.getDesc())) {
+            if (record.getReferee().equals(RefereeEnum.REREREE_ONE.getDesc())) {
                 one.add(record);
             }
-            if (record.getRefereeName().equals(RefereeEnum.REREREE_TWO.getDesc())) {
+            if (record.getReferee().equals(RefereeEnum.REREREE_TWO.getDesc())) {
                 two.add(record);
             }
-            if (record.getRefereeName().equals(RefereeEnum.REREREE_THREE.getDesc())) {
+            if (record.getReferee().equals(RefereeEnum.REREREE_THREE.getDesc())) {
                 three.add(record);
             }
         }

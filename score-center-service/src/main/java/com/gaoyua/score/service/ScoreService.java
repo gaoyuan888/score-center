@@ -20,7 +20,7 @@ public interface ScoreService {
     void storeRecordInfo(Record record);
 
     /**
-     * 计算打分信息
+     * 计算打分信息,核心算法，定时执行一下，每次从job中
      */
     List<Record> getRecord();
 }

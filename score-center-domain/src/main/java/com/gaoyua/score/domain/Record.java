@@ -14,7 +14,7 @@ public class Record {
     /**
      * 裁判编号
      */
-    private String refereeName;
+    private String referee;
 
     /**
      * 1,代表蓝方；2代表红方
@@ -51,12 +51,12 @@ public class Record {
         this.flag = flag;
     }
 
-    public String getRefereeName() {
-        return refereeName;
+    public String getReferee() {
+        return referee;
     }
 
-    public void setRefereeName(String refereeName) {
-        this.refereeName = refereeName;
+    public void setReferee(String referee) {
+        this.referee = referee;
     }
 
     public Integer getAthlete() {
