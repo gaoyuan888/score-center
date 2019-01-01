@@ -1,7 +1,6 @@
 <%@ include file="/WEB-INF/common/default.jsp" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <div id="app">
-    <el-input v-if="true" v-model="record.referee" value="${referee}"></el-input>
     <el-container>
         蓝
         <el-main width="50%">
