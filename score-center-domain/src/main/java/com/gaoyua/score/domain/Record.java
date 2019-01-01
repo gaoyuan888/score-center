@@ -47,6 +47,17 @@ public class Record {
      */
     private Integer flag;
 
+    public Record() {
+    }
+
+    public Record(Integer athlete, int score, int foulNum, Date created, Integer flag) {
+        this.score = score;
+        this.foulNum = foulNum;
+        this.created = created;
+        this.flag = flag;
+        setAthlete(athlete);
+    }
+
     public String getAthleteName() {
         return athleteName;
     }
@@ -77,9 +88,9 @@ public class Record {
 
     public void setAthlete(Integer athlete) {
         this.athlete = athlete;
-        if (athlete!=null&&athlete == 1) {
+        if (athlete != null && athlete == 1) {
             setAthleteName("蓝方");
-        } else if (athlete!=null&&athlete == 2) {
+        } else if (athlete != null && athlete == 2) {
             setAthleteName("红方");
         }
     }

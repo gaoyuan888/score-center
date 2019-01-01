@@ -5,7 +5,6 @@ import com.gaoyua.score.common.Enum.RefereeEnum;
 import com.gaoyua.score.common.constant.RecordList;
 import com.gaoyua.score.domain.Record;
 import com.gaoyua.score.service.ScoreService;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.stereotype.Service;
 
@@ -32,10 +31,21 @@ public class ScoreServiceImpl implements ScoreService {
 
     @Override
     public List<Record> getRecord() {
+        List<Record> result = new ArrayList<>();
+        Record redResult = new Record();
+        Record blueResult = new Record();
         //所有打分记录
         ArrayList<Record> list = RecordList.recordList;
         if (list == null || list.size() == 0) {
-            return null;
+            redResult.setAthlete(2);
+            blueResult.setAthlete(1);
+            redResult.setFlag(1);
+            blueResult.setFlag(1);
+            RecordList.recordList.add(redResult);
+            RecordList.recordList.add(blueResult);
+            result.add(redResult);
+            result.add(blueResult);
+            return result;
         }
         //先按照红、蓝两个运动员分组
         List<Record> red = getRecordGroupByAthLate(list, AthleteEnum.ATHLETERED.getType());
@@ -46,16 +56,30 @@ public class ScoreServiceImpl implements ScoreService {
         Record redEffectScore = getEffectScoreGroupByAthlateAndReferee(red);
         Record blueEffectScore = getEffectScoreGroupByAthlateAndReferee(blue);
         //获取犯规次数
-        Record redResult = getScoreResult(redEffectScore, red);
-        redResult.setAthlete(2);
-        Record blueResult = getScoreResult(blueEffectScore, blue);
-        blueResult.setAthlete(1);
-        List<Record> result = new ArrayList<>();
+        redResult = getScoreResult(redEffectScore, red);
+        blueResult = getScoreResult(blueEffectScore, blue);
         result.add(redResult);
         result.add(blueResult);
         //还原标记
         restoreFlag(list);
         return result;
+    }
+
+    @Override
+    public void getResultScheduled() {
+        try {
+            while (true) {
+                List<Record> record = getRecord();
+                for (Record rd : record) {
+                    RecordList.result.add(rd);
+
+                }
+                Thread.sleep(1000);
+            }
+        } catch (Exception e) {
+//            getResultScheduled();
+        }
+
     }
 
     private void restoreFlag(List<Record> list) {
@@ -110,13 +134,14 @@ public class ScoreServiceImpl implements ScoreService {
     //对红方或者蓝方按照裁判打分分组
     private void assemByReferee(List<Record> one, List<Record> two, List<Record> three, List<Record> ahtlet) {
         for (Record record : ahtlet) {
-            if (record.getReferee().equals(RefereeEnum.REREREE_ONE.getDesc())) {
+            if (record.getReferee() != null && record.getReferee().equals(RefereeEnum.REREREE_ONE.getDesc())) {
                 one.add(record);
-            }
-            if (record.getReferee().equals(RefereeEnum.REREREE_TWO.getDesc())) {
+            } else if (record.getReferee() != null && record.getReferee().equals(RefereeEnum.REREREE_TWO.getDesc())) {
                 two.add(record);
-            }
-            if (record.getReferee().equals(RefereeEnum.REREREE_THREE.getDesc())) {
+            } else if (record.getReferee() != null && record.getReferee().equals(RefereeEnum.REREREE_THREE.getDesc())) {
+                three.add(record);
+            } else {
+                //这样处理有些不合适，右后优化。
                 three.add(record);
             }
         }
@@ -126,6 +151,7 @@ public class ScoreServiceImpl implements ScoreService {
         Record result = new Record();
         Integer flag = 0;
         for (Record r1 : one) {
+            result.setAthlete(r1.getAthlete());
             if (r1.getFlag().equals(2)) {
                 continue;
             }

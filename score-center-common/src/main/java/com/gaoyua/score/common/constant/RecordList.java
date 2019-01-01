@@ -24,7 +24,11 @@ public class RecordList {
     /**
      * 记录裁判信息，初始化分配3个裁判
      */
-    public static volatile Iterator<String> iterator  = new ArrayList<>(Arrays.asList("refereeOne", "refereeTwo", "refereeThree")).iterator();
+    public static volatile Iterator<String> iterator = new ArrayList<>(Arrays.asList("refereeOne", "refereeTwo", "refereeThree")).iterator();
 
+    /**
+     * 两个运动员最终得分结果
+     */
+    public static ArrayList<Record> result = new ArrayList<>();
 
 }

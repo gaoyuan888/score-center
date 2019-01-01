@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -33,13 +34,13 @@ public class ScoreCotroller {
     }
 
     @RequestMapping("/main")
-    public String main(){
+    public String main() {
         return "main";
     }
 
     @RequestMapping("/referee")
     @ResponseBody
-    public ResultJson<String> referee(Model model) {
+    public ResultJson<String> referee() {
         ResultJson result = new ResultJson();
         String referee = RecordList.iterator.next();
         result.setFlag(true);
@@ -51,7 +52,7 @@ public class ScoreCotroller {
     @ResponseBody
     public ResultJson<List<Record>> resultRcord() {
         ResultJson result = new ResultJson();
-        List<Record> record = scoreService.getRecord();
+        List<Record> record = RecordList.result;
         result.setData(record);
         result.setFlag(true);
         return result;
@@ -67,4 +68,40 @@ public class ScoreCotroller {
         return result;
     }
 
+
+    @RequestMapping("/foul")
+    @ResponseBody
+    public ResultJson<List<Record>> foul(Integer athlete) {
+        ResultJson result = new ResultJson();
+        Record r1 = new Record(athlete, -1, 1, new Date(), 1);
+        scoreService.storeRecordInfo(r1);
+        List<Record> res = RecordList.result;
+        result.setData(res);
+        result.setFlag(true);
+        return result;
+    }
+
+    @RequestMapping("/addScore")
+    @ResponseBody
+    public ResultJson<List<Record>> addScore(Integer athlete) {
+        ResultJson result = new ResultJson();
+        Record r1 = new Record(athlete, 1, 0, new Date(), 1);
+        scoreService.storeRecordInfo(r1);
+        List<Record> res = RecordList.result;
+        result.setData(res);
+        result.setFlag(true);
+        return result;
+    }
+
+    @RequestMapping("/reduceScore")
+    @ResponseBody
+    public ResultJson<List<Record>> reduceScore(Integer athlete) {
+        ResultJson result = new ResultJson();
+        Record r1 = new Record(athlete, -1, 0, new Date(), 1);
+        scoreService.storeRecordInfo(r1);
+        List<Record> res = RecordList.result;
+        result.setData(res);
+        result.setFlag(true);
+        return result;
+    }
 }
