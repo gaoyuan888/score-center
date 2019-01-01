@@ -100,7 +100,7 @@
                     //几个参数需要注意一下
                     url: "/referee",//url
                     type: "GET",//方法类型
-                    data: "",
+                    data: {'referee':referee},
                     dataType: "json",//预期服务器返回的数据类型
                     success: function (res) {
                         if (res.flag == true) {

@@ -4,6 +4,7 @@ import com.gaoyua.score.common.ResultJson;
 import com.gaoyua.score.common.constant.RecordList;
 import com.gaoyua.score.domain.Record;
 import com.gaoyua.score.service.ScoreService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,12 +39,14 @@ public class ScoreCotroller {
 
     @RequestMapping("/referee")
     @ResponseBody
-    public ResultJson<String> referee() {
+    public ResultJson<String> referee(String referee) {
+        //防止重新刷新页面
         ResultJson result = new ResultJson();
-        String referee = RecordList.iterator.next();
+        if (StringUtils.isBlank(referee)) {
+            referee = RecordList.iterator.next();
+        }
         result.setFlag(true);
         result.setData(referee);
-
         return result;
     }
 
@@ -72,7 +75,7 @@ public class ScoreCotroller {
     @ResponseBody
     public ResultJson<Boolean> foul(Integer athlete) {
         ResultJson result = new ResultJson();
-        Record r1 = new Record(athlete, 0, 1, new Date(), 1,0);
+        Record r1 = new Record(athlete, 0, 1, new Date(), 1, 0);
         scoreService.storeRecordInfo(r1);
 //        List<Record> res = RecordList.result;
         result.setData(true);
@@ -84,7 +87,7 @@ public class ScoreCotroller {
     @ResponseBody
     public ResultJson<Boolean> addBaseScore(Integer athlete) {
         ResultJson result = new ResultJson();
-        Record r1 = new Record(athlete, 0, 0, new Date(), 1,1);
+        Record r1 = new Record(athlete, 0, 0, new Date(), 1, 1);
         scoreService.storeRecordInfo(r1);
         result.setData(true);
         result.setFlag(true);
@@ -95,7 +98,7 @@ public class ScoreCotroller {
     @ResponseBody
     public ResultJson<Boolean> reduceBaseScore(Integer athlete) {
         ResultJson result = new ResultJson();
-        Record r1 = new Record(athlete, 0, 0, new Date(), 1,-1);
+        Record r1 = new Record(athlete, 0, 0, new Date(), 1, -1);
         scoreService.storeRecordInfo(r1);
         List<Record> res = RecordList.result;
         for (Record re : res) {
