@@ -8,6 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Date;
@@ -43,7 +44,13 @@ public class ScoreCotroller {
         //防止重新刷新页面
         ResultJson result = new ResultJson();
         if (StringUtils.isBlank(referee)) {
-            referee = RecordList.iterator.next();
+            if(RecordList.iterator.hasNext()){
+                referee = RecordList.iterator.next();
+            }else {
+                result.setFlag(false);
+                result.setData("已有3名裁判员处于在线状态");
+                return result;
+            }
         }
         result.setFlag(true);
         result.setData(referee);

@@ -95,18 +95,20 @@
             dateFormat(row, column) {
             },
             getData() {
+                var referee = sessionStorage.getItem('referee');
                 var _this = this;
                 $.ajax({
                     //几个参数需要注意一下
                     url: "/referee",//url
-                    type: "GET",//方法类型
+                    type: "POST",//方法类型
                     data: {'referee':referee},
                     dataType: "json",//预期服务器返回的数据类型
                     success: function (res) {
                         if (res.flag == true) {
                             _this.record.referee = res.data;
+                            sessionStorage.setItem('referee', res.data);
                         } else {
-                            alert("客戶端信息为空");
+                            alert(res.data);
                         }
 
                     },
