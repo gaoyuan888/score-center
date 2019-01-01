@@ -31,6 +31,11 @@ public class Record {
     private int score;
 
     /**
+     * 这项是主控制页面打的分数
+     */
+    private int baseScore;
+
+    /**
      * 犯规次数
      */
     private int foulNum;
@@ -46,6 +51,14 @@ public class Record {
      * 2：已使用
      */
     private Integer flag;
+
+    public int getBaseScore() {
+        return baseScore;
+    }
+
+    public void setBaseScore(int baseScore) {
+        this.baseScore = baseScore;
+    }
 
     public Record() {
     }

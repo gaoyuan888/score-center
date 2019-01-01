@@ -87,7 +87,7 @@ public class ScoreCotroller {
         List<Record> res = RecordList.result;
         for (Record re : res) {
             if (athlete.equals(re.getAthlete())) {
-                re.setScore(re.getScore() + 1);
+                re.setBaseScore(re.getBaseScore() + 1);
             }
         }
         result.setData(res);
@@ -102,7 +102,7 @@ public class ScoreCotroller {
         List<Record> res = RecordList.result;
         for (Record re : res) {
             if (athlete.equals(re.getAthlete())) {
-                re.setScore(re.getScore() - 1);
+                re.setBaseScore(re.getBaseScore() - 1);
             }
         }
         result.setData(res);

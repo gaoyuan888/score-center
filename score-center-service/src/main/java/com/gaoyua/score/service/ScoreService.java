@@ -28,11 +28,6 @@ public interface ScoreService {
     Record getRecord(Integer athlete);
 
     /**
-     * 计算打分信息,核心算法，定时执行一下，每次从job中
-     */
-    List<Record> getRecord();
-
-    /**
      * 启动一个定时器，定时计算结果
      */
 

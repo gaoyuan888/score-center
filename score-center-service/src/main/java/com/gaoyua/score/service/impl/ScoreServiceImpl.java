@@ -37,36 +37,34 @@ public class ScoreServiceImpl implements ScoreService {
 
     @Override
     public Record getRecord(Integer athlete) {
+        Record result = null;
+        ArrayList<Record> resultList = RecordList.result;
+        for (Record record : resultList) {
+            if (record.getAthlete().equals(athlete)) {
+                result = record;
+            }
+        }
         //1.所有打分记录
         ArrayList<Record> list = RecordList.recordList;
         if (list == null || list.size() == 0) {
-            ArrayList<Record> rlist = RecordList.result;
-            for (Record record : rlist) {
-                if (record.getAthlete().equals(athlete)) {
-                    return record;
-                }
-            }
+            return result;
         }
         //2.获取指定运动员打分记录
         List<Record> rlist = getRecordGroupByAthLate(list, athlete);
         if (rlist == null || rlist.size() == 0) {
-            for (Record record : rlist) {
-                if (record.getAthlete().equals(athlete)) {
-                    return record;
-                }
-            }
+            return result;
         }
+
         //3.计算指定运动员的有效得分
-        Record effectScore = getEffectScoreGroupByAthlateAndReferee(rlist);
-        //4.设置运动员
-        effectScore.setAthlete(athlete);
+        int effectScore = getEffectScoreGroupByAthlateAndReferee(rlist);
+        //4.设置有效分数
+        result.setScore(result.getBaseScore() + effectScore);
         //5.获取犯规次数
-        effectScore.setFoulNum(getFoulNum(rlist));
+        result.setFoulNum(getFoulNum(rlist));
         //6.还原标记
         restoreFlag(list);
-        return effectScore;
+        return result;
     }
-
 
     /**
      * 计算犯规次数
@@ -84,41 +82,6 @@ public class ScoreServiceImpl implements ScoreService {
         return result;
     }
 
-    @Override
-    public List<Record> getRecord() {
-        List<Record> result = new ArrayList<>();
-        Record redResult = new Record();
-        Record blueResult = new Record();
-        //所有打分记录
-        ArrayList<Record> list = RecordList.recordList;
-        if (list == null || list.size() == 0) {
-            redResult.setAthlete(2);
-            blueResult.setAthlete(1);
-            redResult.setFlag(1);
-            blueResult.setFlag(1);
-            RecordList.recordList.add(redResult);
-            RecordList.recordList.add(blueResult);
-            result.add(redResult);
-            result.add(blueResult);
-            return result;
-        }
-        //先按照红、蓝两个运动员分组
-        List<Record> red = getRecordGroupByAthLate(list, AthleteEnum.ATHLETERED.getType());
-        List<Record> blue = getRecordGroupByAthLate(list, AthleteEnum.ATHLETEBLEUE.getType());
-        //分别针对红、蓝运动员
-        // 1.按照裁判员分组
-        // 2.并計算各組有效得分
-        Record redEffectScore = getEffectScoreGroupByAthlateAndReferee(red);
-        Record blueEffectScore = getEffectScoreGroupByAthlateAndReferee(blue);
-        //获取犯规次数
-        redResult = getScoreResult(redEffectScore, red);
-        blueResult = getScoreResult(blueEffectScore, blue);
-        result.add(redResult);
-        result.add(blueResult);
-        //还原标记
-        restoreFlag(list);
-        return result;
-    }
 
     @Override
     public void getResultScheduled() {
@@ -128,6 +91,7 @@ public class ScoreServiceImpl implements ScoreService {
                     List<Record> record = new ArrayList<>();
                     record.add(getRecord(1));
                     record.add(getRecord(2));
+                    RecordList.result.clear();
                     for (Record rd : record) {
                         RecordList.result.add(rd);
                     }
@@ -168,7 +132,7 @@ public class ScoreServiceImpl implements ScoreService {
         return result;
     }
 
-    private Record getEffectScoreGroupByAthlateAndReferee(List<Record> ahtlet) {
+    private int getEffectScoreGroupByAthlateAndReferee(List<Record> ahtlet) {
 
         Record result = new Record();
         //分别将红、蓝两组队员按照三个裁判分组
@@ -182,9 +146,11 @@ public class ScoreServiceImpl implements ScoreService {
         Record effectTwo = getEffectScore(two, three, one);
         Record effectThree = getEffectScore(three, two, one);
 
-        result.setScore(effectOne.getScore() + effectTwo.getScore() + effectThree.getScore());
-        result.setAthlete(effectOne.getAthlete() == null ? (effectTwo.getAthlete() == null ? effectThree.getAthlete() : effectTwo.getAthlete()) : effectOne.getAthlete());
-        return result;
+        return effectOne.getScore() + effectTwo.getScore() + effectThree.getScore();
+
+//        result.setScore(effectOne.getScore() + effectTwo.getScore() + effectThree.getScore());
+//        result.setAthlete(effectOne.getAthlete() == null ? (effectTwo.getAthlete() == null ? effectThree.getAthlete() : effectTwo.getAthlete()) : effectOne.getAthlete());
+//        return result;
     }
 
     //对红方或者蓝方按照裁判打分分组

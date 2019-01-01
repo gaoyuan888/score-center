@@ -1,10 +1,11 @@
 package com.gaoyua.score.common.constant;
 
 import com.gaoyua.score.domain.Record;
-import javafx.beans.property.ReadOnlyListProperty;
 
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.Iterator;
 
 /**
  * 功能描述:
