@@ -70,19 +70,19 @@ public class ScoreCotroller {
 
     @RequestMapping("/foul")
     @ResponseBody
-    public ResultJson<List<Record>> foul(Integer athlete) {
+    public ResultJson<Boolean> foul(Integer athlete) {
         ResultJson result = new ResultJson();
         Record r1 = new Record(athlete, 0, 1, new Date(), 1);
         scoreService.storeRecordInfo(r1);
-        List<Record> res = RecordList.result;
-        result.setData(res);
+//        List<Record> res = RecordList.result;
+        result.setData(true);
         result.setFlag(true);
         return result;
     }
 
     @RequestMapping("/addScore")
     @ResponseBody
-    public ResultJson<List<Record>> addScore(Integer athlete) {
+    public ResultJson<Boolean> addScore(Integer athlete) {
         ResultJson result = new ResultJson();
         List<Record> res = RecordList.result;
         for (Record re : res) {
@@ -90,14 +90,14 @@ public class ScoreCotroller {
                 re.setBaseScore(re.getBaseScore() + 1);
             }
         }
-        result.setData(res);
+        result.setData(true);
         result.setFlag(true);
         return result;
     }
 
     @RequestMapping("/reduceScore")
     @ResponseBody
-    public ResultJson<List<Record>> reduceScore(Integer athlete) {
+    public ResultJson<Boolean> reduceScore(Integer athlete) {
         ResultJson result = new ResultJson();
         List<Record> res = RecordList.result;
         for (Record re : res) {
@@ -105,7 +105,7 @@ public class ScoreCotroller {
                 re.setBaseScore(re.getBaseScore() - 1);
             }
         }
-        result.setData(res);
+        result.setData(true);
         result.setFlag(true);
         return result;
     }

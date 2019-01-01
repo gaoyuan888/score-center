@@ -27,9 +27,14 @@
         },
         created() {
             this.getData();
+            setInterval(this.timer, 1000);
         },
         methods: {
-            onReduceScore(athlete){
+            //定時器，定時刷新数据
+            timer: function () {
+                this.getData();
+            },
+            onReduceScore(athlete) {
                 var _this = this;
                 //将裁判对运动员的打分传到后台
                 $.ajax({
@@ -39,7 +44,7 @@
                     dataType: "json",//预期服务器返回的数据类型
                     success: function (res) {
                         if (res.flag == true) {
-                            _this.records = res.data;
+                            // _this.records = res.data;
                         } else {
                             alert("客戶端信息为空");
                         }
@@ -50,7 +55,7 @@
                     }
                 });
             },
-            onAddScore(athlete){
+            onAddScore(athlete) {
                 var _this = this;
                 //将裁判对运动员的打分传到后台
                 $.ajax({
@@ -60,7 +65,7 @@
                     dataType: "json",//预期服务器返回的数据类型
                     success: function (res) {
                         if (res.flag == true) {
-                            _this.records = res.data;
+                            // _this.records = res.data;
                         } else {
                             alert("客戶端信息为空");
                         }
@@ -72,7 +77,7 @@
                 });
             },
             onFoul(athlete) {
-                var _this = this;
+                // var _this = this;
                 //将裁判对运动员的打分传到后台
                 $.ajax({
                     type: "POST",//方法类型
@@ -81,7 +86,7 @@
                     dataType: "json",//预期服务器返回的数据类型
                     success: function (res) {
                         if (res.flag == true) {
-                            _this.records = res.data;
+                            // _this.records = res.data;
                         } else {
                             alert("客戶端信息为空");
                         }
