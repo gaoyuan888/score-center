@@ -2,10 +2,7 @@ package com.gaoyua.score.common.constant;
 
 import com.gaoyua.score.domain.Record;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Iterator;
+import java.util.*;
 
 /**
  * 功能描述:
@@ -23,15 +20,20 @@ public class RecordList {
     /**
      * 记录裁判信息，初始化分配3个裁判
      */
-    public static volatile Iterator<String> iterator = new ArrayList<>(Arrays.asList("refereeOne", "refereeTwo", "refereeThree")).iterator();
+    public static volatile List<String> refereeList = new ArrayList<>(Arrays.asList("refereeOne", "refereeTwo", "refereeThree"));
+
+    /**
+     * 初始化裁判迭代器
+     */
+    public static volatile Iterator<String> iterator = null;
 
     /**
      * 两个运动员最终得分结果
      */
     public static ArrayList<Record> result = new ArrayList<Record>() {
         {
-            add(new Record(1, 0, 0, new Date(), 1,0));
-            add(new Record(2, 0, 0, new Date(), 1,0));
+            add(new Record(1, 0, 0, new Date(), 1, 0));
+            add(new Record(2, 0, 0, new Date(), 1, 0));
         }
     };
 

@@ -29,8 +29,24 @@ public class ScoreCotroller {
 
     @RequestMapping("/")
     public String index() {
-        scoreService.getResultScheduled();
+        initFun();
         return "scoring";
+    }
+
+    /**
+     * 系统初始化定时器
+     * 初始化迭代器
+     */
+    private void initFun() {
+        scoreService.getResultScheduled();
+        if(RecordList.iterator==null){
+            RecordList.iterator = RecordList.refereeList.iterator();
+        }
+    }
+
+    @RequestMapping("/resetReferee")
+    public void resetReferee(){
+        RecordList.iterator = RecordList.refereeList.iterator();
     }
 
     @RequestMapping("/main")
@@ -44,9 +60,9 @@ public class ScoreCotroller {
         //防止重新刷新页面
         ResultJson result = new ResultJson();
         if (StringUtils.isBlank(referee)) {
-            if(RecordList.iterator.hasNext()){
+            if (RecordList.iterator.hasNext()) {
                 referee = RecordList.iterator.next();
-            }else {
+            } else {
                 result.setFlag(false);
                 result.setData("已有3名裁判员处于在线状态");
                 return result;
