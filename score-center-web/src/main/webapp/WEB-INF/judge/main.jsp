@@ -19,6 +19,7 @@
             <button id="stop" name="button" @click="stop">停止计时</button>
             <button id="start" name="button" @click="start">开始计时</button>
             <button id="reset" name="button" @click="reset">重置时间</button>
+            <button id="resetGame" name="button" @click="resetGame">重置比赛</button>
         </el-footer>
     </el-container>
 </div>
@@ -28,17 +29,17 @@
         el: '#app',
         data: {
             records: {},
-            content:'倒计时开始',
-            clock:'',
+            content: '倒计时开始',
+            clock: '',
             totalTime: 60,
-            timerObj:{
-                h:0,//定义时，分，秒，毫秒并初始化为0；
-                m:0,
-                ms:0,
-                s:0,
-                time:0,
-                str:'',
-                mytime:''
+            timerObj: {
+                h: 0,//定义时，分，秒，毫秒并初始化为0；
+                m: 0,
+                ms: 0,
+                s: 0,
+                time: 0,
+                str: '',
+                mytime: ''
             }
         },
         created() {
@@ -46,54 +47,54 @@
             setInterval(this.getDataTimer, 1000);
         },
         methods: {
-            timer(){   //定义计时函数
-                this.timerObj.ms=this.timerObj.ms+50;         //毫秒
-                if(this.timerObj.ms>=1000){
-                    this.timerObj.ms=0;
-                    this.timerObj.s=this.timerObj.s+1;         //秒
+            timer() {   //定义计时函数
+                this.timerObj.ms = this.timerObj.ms + 50;         //毫秒
+                if (this.timerObj.ms >= 1000) {
+                    this.timerObj.ms = 0;
+                    this.timerObj.s = this.timerObj.s + 1;         //秒
                 }
-                if(this.timerObj.s>=60){
-                    this.timerObj.s=0;
-                    this.timerObj.m=this.timerObj.m+1;        //分钟
+                if (this.timerObj.s >= 60) {
+                    this.timerObj.s = 0;
+                    this.timerObj.m = this.timerObj.m + 1;        //分钟
                 }
-                if(this.timerObj.m>=60){
-                    this.timerObj.m=0;
-                    this.timerObj.h=this.timerObj.h+1;        //小时
+                if (this.timerObj.m >= 60) {
+                    this.timerObj.m = 0;
+                    this.timerObj.h = this.timerObj.h + 1;        //小时
                 }
-                this.timerObj.str =this.toDub(this.timerObj.h)+":"+this.toDub(this.timerObj.m)+":"+this.toDub(this.timerObj.s)+""/*+this.toDubms(this.ms)+"毫秒"*/;
+                this.timerObj.str = this.toDub(this.timerObj.h) + ":" + this.toDub(this.timerObj.m) + ":" + this.toDub(this.timerObj.s) + ""/*+this.toDubms(this.ms)+"毫秒"*/;
             },
 
-            reset(){  //重置
+            reset() {  //重置
                 clearInterval(this.timerObj.time);
-                this.timerObj.h=0;
-                this.timerObj.m=0;
-                this.timerObj.ms=0;
-                this.timerObj.s=0;
-                this.timerObj.str="00:00:00";
+                this.timerObj.h = 0;
+                this.timerObj.m = 0;
+                this.timerObj.ms = 0;
+                this.timerObj.s = 0;
+                this.timerObj.str = "00:00:00";
             },
 
-            start(){  //开始
-                this.timerObj.time=setInterval(this.timer,50);
+            start() {  //开始
+                this.timerObj.time = setInterval(this.timer, 50);
             },
 
-            stop(){  //暂停
+            stop() {  //暂停
                 clearInterval(this.timerObj.time);
             },
-            toDub(n){  //补0操作
-                if(n<10){
-                    return "0"+n;
+            toDub(n) {  //补0操作
+                if (n < 10) {
+                    return "0" + n;
                 }
                 else {
-                    return ""+n;
+                    return "" + n;
                 }
             },
 
-            toDubms(n){  //给毫秒补0操作
-                if(n<10){
-                    return "00"+n;
+            toDubms(n) {  //给毫秒补0操作
+                if (n < 10) {
+                    return "00" + n;
                 }
                 else {
-                    return "0"+n;
+                    return "0" + n;
                 }
 
             },
@@ -183,6 +184,26 @@
                     }
                 });
             },
+            resetGame() {
+                $.ajax({
+                    //几个参数需要注意一下
+                    url: "/resetGame",//url
+                    type: "get",//方法类型
+                    data: "",
+                    dataType: "json",//预期服务器返回的数据类型
+                    success: function (res) {
+                        if (res.flag == true) {
+                            alert("已重置比赛!");
+                        } else {
+                            alert("重置失敗");
+                        }
+
+                    },
+                    error: function () {
+                        alert("异常！");
+                    }
+                });
+            },
             handleSizeChange(val) {
 
             },
@@ -196,15 +217,16 @@
 
 
     /*#mytime{*/
-        /*background: #bbb;*/
-        /*color: #fff;*/
-        /*display: block;*/
+    /*background: #bbb;*/
+    /*color: #fff;*/
+    /*display: block;*/
     /*}*/
-    .wrapper{
+    .wrapper {
         text-align: center;
         width: 60%;
         margin: 250px auto;
     }
+
     .row-bg {
         padding: 0px 0;
         background-color: #f9fafc;

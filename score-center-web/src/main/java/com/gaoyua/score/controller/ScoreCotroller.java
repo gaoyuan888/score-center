@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -44,17 +45,34 @@ public class ScoreCotroller {
         }
     }
 
-    @RequestMapping("/clear")
-    public void resetReferee() {
+    @RequestMapping("/resetGame")
+    @ResponseBody
+    public ResultJson<Boolean> resetReferee() {
         //清除登陆信息
         RecordList.iterator = RecordList.refereeList.iterator();
         //清除da打分信息
-        RecordList.recordList.clear();
+        RecordList.recordList = new ArrayList<>();
+        //清除最终结果信息
+        RecordList.result = new ArrayList<Record>() {
+            {
+                add(new Record(1, 0, 0, new Date(), 1, 0));
+                add(new Record(2, 0, 0, new Date(), 1, 0));
+            }
+        };
+        ResultJson<Boolean> result = new ResultJson<>();
+        result.setData(true);
+        result.setFlag(true);
+        return result;
     }
 
     @RequestMapping("/main")
     public String main() {
         return "main";
+    }
+
+    @RequestMapping("/bigScore")
+    public String bigScore() {
+        return "bigScore";
     }
 
     @RequestMapping("/error")
