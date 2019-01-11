@@ -44,9 +44,10 @@ public class ScoreCotroller {
         }
     }
 
-    @RequestMapping("/resetReferee")
+    @RequestMapping("/clear")
     public void resetReferee(){
         RecordList.iterator = RecordList.refereeList.iterator();
+        RecordList.recordList.clear();
     }
 
     @RequestMapping("/main")
