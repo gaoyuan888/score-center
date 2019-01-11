@@ -46,7 +46,9 @@ public class ScoreCotroller {
 
     @RequestMapping("/clear")
     public void resetReferee(){
+        //清除登陆信息
         RecordList.iterator = RecordList.refereeList.iterator();
+        //清除da打分信息
         RecordList.recordList.clear();
     }
 
