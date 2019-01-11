@@ -2,53 +2,55 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <div id="app">
     <el-container>
-        蓝
-        <el-main width="50%">
-            <el-row type="flex" class="row-bg">
-                <el-col :span="6">
-                    <el-button circle @click="onSubmit(1,1)">1分</el-button>
-                </el-col>
-            </el-row>
-            <el-row type="flex" class="row-bg" justify="center">
-                <el-col :span="6">
-                    <el-button type="primary" circle @click="onSubmit(1,2)">2分</el-button>
-                </el-col>
-            </el-row>
-            <el-row type="flex" class="row-bg" justify="end">
-                <el-col :span="6">
-                    <el-button type="success" circle @click="onSubmit(1,3)">3分</el-button>
-                </el-col>
-            </el-row>
-            <el-row type="flex" class="row-bg" justify="end">
-                <el-col :span="6">
-                    <el-button type="info" circle @click="onSubmit(1,4)">4分</el-button>
-                </el-col>
-            </el-row>
-        </el-main>
         红
         <el-main>
             <el-row type="flex" class="row-bg" justify="end">
                 <el-col :span="6">
-                    <el-button type="info" circle @click="onSubmit(2,1)">1分</el-button>
+                    <el-button  type="danger" circle @click="onSubmit(2,1)">1分</el-button>
                 </el-col>
             </el-row>
 
             <el-row type="flex" class="row-bg" justify="center">
                 <el-col :span="6">
-                    <el-button type="success" circle @click="onSubmit(2,2)">2分</el-button>
+                    <el-button type="danger" circle @click="onSubmit(2,2)">2分</el-button>
                 </el-col>
             </el-row>
             <el-row type="flex" class="row-bg">
                 <el-col :span="6">
-                    <el-button type="primary" circle @click="onSubmit(2,3)">3分</el-button>
+                    <el-button  type="danger" circle @click="onSubmit(2,3)">3分</el-button>
                 </el-col>
             </el-row>
             <el-row type="flex" class="row-bg">
                 <el-col :span="6">
-                    <el-button circle @click="onSubmit(2,4)">4分</el-button>
+                    <el-button  type="danger" circle @click="onSubmit(2,4)">4分</el-button>
                 </el-col>
             </el-row>
         </el-main>
+
+        蓝
+        <el-main width="50%">
+            <el-row type="flex" class="row-bg">
+                <el-col :span="6">
+                    <el-button   type="primary" circle @click="onSubmit(1,1)">1分</el-button>
+                </el-col>
+            </el-row>
+            <el-row type="flex" class="row-bg" justify="center">
+                <el-col :span="6">
+                    <el-button   type="primary" circle @click="onSubmit(1,2)">2分</el-button>
+                </el-col>
+            </el-row>
+            <el-row type="flex" class="row-bg" justify="end">
+                <el-col :span="6">
+                    <el-button   type="primary" circle @click="onSubmit(1,3)">3分</el-button>
+                </el-col>
+            </el-row>
+            <el-row type="flex" class="row-bg" justify="end">
+                <el-col :span="6">
+                    <el-button  type="primary" circle @click="onSubmit(1,4)">4分</el-button>
+                </el-col>
+            </el-row>
+        </el-main>
+
     </el-container>
 </div>
 
