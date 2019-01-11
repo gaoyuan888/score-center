@@ -39,13 +39,13 @@ public class ScoreCotroller {
      */
     private void initFun() {
         scoreService.getResultScheduled();
-        if(RecordList.iterator==null){
+        if (RecordList.iterator == null) {
             RecordList.iterator = RecordList.refereeList.iterator();
         }
     }
 
     @RequestMapping("/clear")
-    public void resetReferee(){
+    public void resetReferee() {
         //清除登陆信息
         RecordList.iterator = RecordList.refereeList.iterator();
         //清除da打分信息
@@ -56,6 +56,7 @@ public class ScoreCotroller {
     public String main() {
         return "main";
     }
+
     @RequestMapping("/error")
     public String error() {
         return "error";
@@ -106,7 +107,9 @@ public class ScoreCotroller {
     public ResultJson<Boolean> foul(Integer athlete) {
         ResultJson result = new ResultJson();
         Record r1 = new Record(athlete, 0, 1, new Date(), 1, 0);
+        Record r2 = new Record(athlete == 1 ? 2 : 1, 0, 0, new Date(), 1, 0);
         scoreService.storeRecordInfo(r1);
+        scoreService.storeRecordInfo(r2);
 //        List<Record> res = RecordList.result;
         result.setData(true);
         result.setFlag(true);
